@@ -1,0 +1,18 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.geodb.ite</groupId>
+	<artifactId>com.geodb.ite.features</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>com.geodb.ite</groupId>
+		<artifactId>com.geodb.ite.root</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>com.geodb.ite.feature.e4rcp</module>
+		<module>com.geodb.ite.feature.app.rcp</module>
+	</modules>
+</project>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.geodb.ite.feature.e4rcp"
+      label="E4 RCP"
+      version="1.0.0.qualifier"
+      provider-name="GeoDB">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.eclipse.e4.rcp"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.common"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecore"
+         version="0.0.0"/>
+
+</feature>
