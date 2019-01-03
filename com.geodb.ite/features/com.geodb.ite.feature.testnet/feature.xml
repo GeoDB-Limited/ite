@@ -42,6 +42,7 @@
       <import plugin="org.eclipse.e4.ui.services"/>
       <import plugin="org.eclipse.e4.core.di.annotations"/>
       <import plugin="org.eclipse.core.jobs"/>
+      <import plugin="org.eclipse.e4.core.di.extensions"/>
    </requires>
 
    <plugin
