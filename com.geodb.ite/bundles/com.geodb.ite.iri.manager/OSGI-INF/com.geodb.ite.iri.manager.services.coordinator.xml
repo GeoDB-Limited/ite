@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="com.geodb.ite.iri.manager.services.coordinator">
+   <implementation class="com.geodb.ite.iri.manager.services.contextfunctions.coordinator.CoordinatorServiceContextFunction"/>
+   <property name="service.context.key" type="String" value="com.geodb.ite.iri.manager.services.CoordinatorService"/>
+   <service>
+      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
+   </service>
+</scr:component>

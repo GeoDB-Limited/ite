@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.geodb.ite.feature.app.rcp"
-      label="ITE RCP"
+      label="ITE RCP Feature"
       version="1.0.0.qualifier"
       provider-name="GeoDB">
 

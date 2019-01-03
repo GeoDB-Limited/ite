@@ -1,0 +1,76 @@
+--- src/com/iota/iri/network/replicator/ReplicatorSourcePool.java
++++ src/com/iota/iri/network/replicator/ReplicatorSourcePool.java
+@@ -22,6 +22,7 @@
+     private static final Logger log = LoggerFactory.getLogger(ReplicatorSourcePool.class);
+     private ExecutorService pool;
+     private int port;
++    private ServerSocket server = null;
+ 
+     public ReplicatorSourcePool(final ReplicatorSinkPool replicatorSinkPool,
+                                 final Node node,
+@@ -36,7 +37,6 @@
+     @Override
+     public void run() {
+         ExecutorService pool;
+-        ServerSocket server = null;
+         pool = Executors.newFixedThreadPool(Replicator.NUM_THREADS);
+         this.pool = pool;
+         try {
+@@ -44,25 +44,31 @@
+             log.info("TCP replicator is accepting connections on tcp port " + server.getLocalPort());
+             while (!shutdown) {
+                 try {
+-                    Socket request = server.accept();
+-                    request.setSoLinger(true, 0);
+-                    Runnable proc = new ReplicatorSourceProcessor( replicatorSinkPool, request, node, maxPeers, testnet);
+-                    pool.submit(proc);
++                    if (server != null && !server.isClosed()) {
++                        Socket request = server.accept();
++                        request.setSoLinger(true, 0);
++                        Runnable proc = new ReplicatorSourceProcessor( replicatorSinkPool, request, node, maxPeers, testnet);
++                        pool.submit(proc);
++                    }
+                 } catch (IOException ex) {
+-                    log.error("Error accepting connection", ex);
++                    if (!shutdown) log.error("Error accepting connection", ex);
+                 }
+             }
+             log.info("ReplicatorSinkPool shutting down");
+         } catch (IOException e) {
+             log.error("***** NETWORK ALERT ***** Cannot create server socket on port {}, {}", port, e.getMessage());
+         } finally {
+-            if (server != null) {
+-                try {
+-                    server.close();
+-                }
+-                catch (Exception e) {
+-                    // don't care.
+-                }
++            shutdownServer();
++        }
++    }
++
++    private void shutdownServer() {
++        if (server != null && !server.isClosed()) {
++            try {
++                server.close();
++                server = null;
++            } catch (Exception e) {
++                // don't care
+             }
+         }
+     }
+@@ -70,8 +76,11 @@
+     public void shutdown() throws InterruptedException {
+         shutdown = true;
+         //notify();
+-        pool.shutdown();
+-        pool.awaitTermination(6, TimeUnit.SECONDS);
++        if (pool != null) {
++            pool.shutdown();
++            pool.awaitTermination(6, TimeUnit.SECONDS);
++        }
++        shutdownServer();
+     }
+ 
+     public ReplicatorSourcePool init(int port) {

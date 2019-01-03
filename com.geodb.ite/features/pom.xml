@@ -14,5 +14,9 @@
 	<modules>
 		<module>com.geodb.ite.feature.e4rcp</module>
 		<module>com.geodb.ite.feature.app.rcp</module>
+		<module>com.geodb.ite.feature.rocksdb</module>
+		<module>com.geodb.ite.feature.iri</module>
+		<module>com.geodb.ite.feature.jota</module>
+		<module>com.geodb.ite.feature.testnet</module>
 	</modules>
 </project>

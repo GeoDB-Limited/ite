@@ -1,0 +1,26 @@
+--- src/com/iota/iri/Snapshot.java
++++ src/com/iota/iri/Snapshot.java
+@@ -57,7 +57,6 @@
+     private static void checkInitialSnapshotIsConsistent(Map<Hash, Long> initialState) {
+         if (!isConsistent(initialState)) {
+             log.error("Initial Snapshot inconsistent.");
+-            System.exit(-1);
+         }
+     }
+ 
+@@ -65,7 +64,6 @@
+         long stateValue = initialState.values().stream().reduce(Math::addExact).orElse(Long.MAX_VALUE);
+         if (stateValue != TransactionViewModel.SUPPLY) {
+             log.error("Transaction resolves to incorrect ledger balance: {}", TransactionViewModel.SUPPLY - stateValue);
+-            System.exit(-1);
+         }
+     }
+ 
+@@ -89,7 +87,6 @@
+             //syso is left until logback is fixed
+             System.out.println("Failed to load snapshot.");
+             log.error("Failed to load snapshot.", e);
+-            System.exit(-1);
+         }
+         finally {
+             IotaIOUtils.closeQuietly(reader);

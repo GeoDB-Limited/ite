@@ -15,6 +15,15 @@
 
    <windowImages/>
 
+   <launcher>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
    <plugins>
       <plugin id="com.geodb.ite.rcp"/>
       <plugin id="com.ibm.icu"/>
@@ -90,11 +99,15 @@
    </plugins>
 
    <features>
-      <feature id="com.geodb.ite.feature.app.rcp"/>
       <feature id="org.eclipse.emf.ecore"/>
+      <feature id="com.geodb.ite.feature.rocksdb"/>
+      <feature id="com.geodb.ite.feature.iri"/>
       <feature id="com.geodb.ite.feature.e4rcp"/>
       <feature id="org.eclipse.emf.common"/>
       <feature id="org.eclipse.e4.rcp"/>
+      <feature id="com.geodb.ite.feature.app.rcp"/>
+      <feature id="com.geodb.ite.feature.testnet"/>
+      <feature id="com.geodb.ite.feature.jota"/>
    </features>
 
    <configurations>

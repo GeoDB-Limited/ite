@@ -1,0 +1,22 @@
+--- src/com/iota/iri/network/UDPReceiver.java
++++ src/com/iota/iri/network/UDPReceiver.java
+@@ -66,7 +66,7 @@
+             int processed = 0, dropped = 0;
+ 
+             while (!shuttingDown.get()) {
+-
++              if (socket != null && socket.isClosed()) {
+                 if (((processed + dropped) % 50000 == 0)) {
+                     log.info("Receiver thread processed/dropped ratio: "+processed+"/"+dropped);
+                     processed = 0;
+@@ -94,8 +94,9 @@
+                     dropped++;
+ 
+                 } catch (final Exception e) {
+-                    log.error("Receiver Thread Exception:", e);
++                    if (!shuttingDown.get()) log.error("Receiver Thread Exception:", e);
+                 }
++              }
+             }
+             log.info("Shutting down spawning Receiver Thread");
+         };
