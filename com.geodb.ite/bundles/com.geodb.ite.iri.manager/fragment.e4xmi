@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_kp-30BA2EemUN4deEHQ0oA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_mlzEQBA2EemUN4deEHQ0oA" featurename="commands" parentElementId="xpath:/">
+    <elements xsi:type="commands:Command" xmi:id="_qi-EcBA2EemUN4deEHQ0oA" elementId="com.geodb.ite.iri.manager.iri.start.command" commandName="Start IRI"/>
+    <elements xsi:type="commands:Command" xmi:id="_9J404BA5EemUN4deEHQ0oA" elementId="com.geodb.ite.iri.manager.iri.stop.command" commandName="Stop IRI"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_uxCnYBA2EemUN4deEHQ0oA" featurename="handlers" parentElementId="xpath:/">
+    <elements xsi:type="commands:Handler" xmi:id="_x-_KEBA2EemUN4deEHQ0oA" elementId="com.geodb.ite.iri.manager.iri.start.handler" contributionURI="bundleclass://com.geodb.ite.iri.manager/com.geodb.ite.iri.manager.handlers.IRIStartHandler" command="_qi-EcBA2EemUN4deEHQ0oA"/>
+    <elements xsi:type="commands:Handler" xmi:id="_-PsmYBA5EemUN4deEHQ0oA" elementId="com.geodb.ite.iri.manager.iri.stop.handler" contributionURI="bundleclass://com.geodb.ite.iri.manager/com.geodb.ite.iri.manager.handlers.IRIStopHandler" command="_9J404BA5EemUN4deEHQ0oA"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Ik0N0BA_EemUN4deEHQ0oA" featurename="addons" parentElementId="xpath:/">
+    <elements xsi:type="application:Addon" xmi:id="_J-eIYBA_EemUN4deEHQ0oA" elementId="com.geodb.ite.iri.manager.config.iri.addon" contributionURI="bundleclass://com.geodb.ite.iri.manager/com.geodb.ite.iri.manager.addons.ConfigIRIAddon"/>
+  </fragments>
+</fragment:ModelFragments>

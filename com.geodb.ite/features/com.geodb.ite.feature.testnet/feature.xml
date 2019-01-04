@@ -43,6 +43,7 @@
       <import plugin="org.eclipse.e4.core.di.annotations"/>
       <import plugin="org.eclipse.core.jobs"/>
       <import plugin="org.eclipse.e4.core.di.extensions"/>
+      <import plugin="org.eclipse.e4.core.commands"/>
    </requires>
 
    <plugin
@@ -54,6 +55,13 @@
 
    <plugin
          id="com.geodb.ite.iri.manager.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.geodb.ite.iri.manager.interface"
          download-size="0"
          install-size="0"
          version="0.0.0"

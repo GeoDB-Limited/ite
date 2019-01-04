@@ -3,15 +3,9 @@ package com.geodb.ite.iri.manager.services.providers.iri;
 import java.util.Arrays;
 import java.util.List;
 
-public interface Configuration {
-	public static final String ENABLE = "com.geodb.ite.iri.manager.services.iri.enable";
-	public static final String PORT = "com.geodb.ite.iri.manager.services.iri.port";
-	public static final String UDP_PORT = "com.geodb.ite.iri.manager.services.iri.udp.port";
-	public static final String TCP_PORT = "com.geodb.ite.iri.manager.services.iri.tcp.port";
-	public static final String SEND_LIMIT = "com.geodb.ite.iri.manager.services.iri.send.limit";
-	public static final String MAX_PEERS = "com.geodb.ite.iri.manager.services.iri.max.peers";
-	public static final String MWM = "com.geodb.ite.iri.manager.services.iri.mwm";
+import com.geodb.ite.iri.manager.services.configuration.IRIServiceConfiguration;
 
+public interface Configuration extends IRIServiceConfiguration {
 	public static final boolean ENABLE_DEFAULT = true;
 	public static final String PORT_DEFAULT = "14700";
 	public static final String UDP_PORT_DEFAULT = "14600";

@@ -1,4 +1,4 @@
-package com.geodb.ite.iri.manager.services.events.iri;
+package com.geodb.ite.iri.manager.services.events;
 
 public interface IRIServiceEvents {
 	String TOPIC_BASE = "IRI";

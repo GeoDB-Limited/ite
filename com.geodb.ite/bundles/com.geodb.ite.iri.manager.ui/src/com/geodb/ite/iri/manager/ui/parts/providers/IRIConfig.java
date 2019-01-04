@@ -15,6 +15,8 @@ import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.jface.viewers.Viewer;
 
+import com.geodb.ite.iri.manager.services.configuration.IRIServiceConfiguration;
+
 @Singleton
 @Creatable
 public class IRIConfig {
@@ -27,25 +29,25 @@ public class IRIConfig {
 	private List<Listener> listeners;
 
 	@Inject
-	private void setPort(@Optional @Named("com.geodb.ite.iri.manager.services.iri.port") String value) {
+	private void setPort(@Optional @Named(IRIServiceConfiguration.PORT) String value) {
 		elements.put("port", value);
 		notifyListeners();
 	}
 
 	@Inject
-	private void setUdpPort(@Optional @Named("com.geodb.ite.iri.manager.services.iri.tcp.port") String value) {
+	private void setUdpPort(@Optional @Named(IRIServiceConfiguration.TCP_PORT) String value) {
 		elements.put("TCP port", value);
 		notifyListeners();
 	}
 
 	@Inject
-	private void setTcpPort(@Optional @Named("com.geodb.ite.iri.manager.services.iri.udp.port") String value) {
+	private void setTcpPort(@Optional @Named(IRIServiceConfiguration.UDP_PORT) String value) {
 		elements.put("UDP port", value);
 		notifyListeners();
 	}
 
 	@Inject
-	private void setMWM(@Optional @Named("com.geodb.ite.iri.manager.services.iri.mwm") String value) {
+	private void setMWM(@Optional @Named(IRIServiceConfiguration.MWM) String value) {
 		elements.put("MWM", value);
 		notifyListeners();
 	}

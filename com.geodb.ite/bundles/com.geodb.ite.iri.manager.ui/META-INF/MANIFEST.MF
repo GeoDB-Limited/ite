@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: GeoDB
 Automatic-Module-Name: com.geodb.ite.iri.manager.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: com.geodb.ite.iri.manager;visibility:=reexport,
+Require-Bundle: com.geodb.ite.iri.manager.interface,
  com.geodb.ite.jota,
  javax.inject,
  org.eclipse.osgi,
@@ -19,5 +19,6 @@ Require-Bundle: com.geodb.ite.iri.manager;visibility:=reexport,
  org.eclipse.core.runtime,
  org.eclipse.e4.core.di,
  org.eclipse.e4.core.di.extensions,
- org.eclipse.e4.core.contexts
+ org.eclipse.e4.core.contexts,
+ org.eclipse.e4.core.commands
 Import-Package: javax.annotation;version="1.2.0"

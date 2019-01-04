@@ -5,9 +5,13 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.e4.core.commands.ECommandService;
+import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
@@ -28,8 +32,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import com.geodb.ite.iri.manager.commands.IRIServiceCommands;
 import com.geodb.ite.iri.manager.services.IRIService;
-import com.geodb.ite.iri.manager.services.events.iri.IRIServiceEvents;
+import com.geodb.ite.iri.manager.services.events.IRIServiceEvents;
 import com.geodb.ite.iri.manager.ui.parts.providers.ConfigContentProvider;
 import com.geodb.ite.iri.manager.ui.parts.providers.FieldLabelProvider;
 import com.geodb.ite.iri.manager.ui.parts.providers.IRIConfig;
@@ -39,6 +44,7 @@ import com.geodb.ite.iri.manager.ui.parts.providers.ObjectLabelProvider;
 import jota.IotaAPI;
 import jota.dto.response.GetNodeInfoResponse;
 
+@SuppressWarnings("restriction")
 public class InfoPart {
 
 	public static final String ID = "com.geodb.ite.iri.manager.info.part";
@@ -60,6 +66,11 @@ public class InfoPart {
 	private TableViewer configViewer, infoViewer;
 	private TableColumnLayout tableLayoutConfig, tableLayoutInfo;
 
+	@Inject
+	@Optional
+	@Named(IRIService.CONNECTED)
+	private Boolean connected;
+	
 	private IotaAPI api;
 
 	@Inject
@@ -85,9 +96,12 @@ public class InfoPart {
 
 	@Inject
 	private UISynchronize sync;
-
+	
 	@Inject
-	private IRIService iri;
+	private EHandlerService handlerService;
+	
+	@Inject
+	private ECommandService commandService;
 
 	@Inject
 	private IRIConfig iriConfig;
@@ -192,10 +206,9 @@ public class InfoPart {
 	}
 
 	private void setConfigInput() {
-		Job job = Job.create("Update API info", (ICoreRunnable) monitor -> {
+		Job job = Job.create("Update IRI Config", (ICoreRunnable) monitor -> {
 			sync.asyncExec(() -> {
 				if (availableViewer(configViewer)) {
-					configViewer.setInput(iriConfig);
 					iriConfig.register(new IRIConfig.Listener() {
 						@Override
 						public void layout() {
@@ -207,6 +220,7 @@ public class InfoPart {
 							return configViewer;
 						}
 					});
+					configViewer.setInput(iriConfig);
 					layoutTableColumns(configViewer, tableLayoutConfig);
 				}
 			});
@@ -220,7 +234,7 @@ public class InfoPart {
 				if (availableViewer(infoViewer)) {
 					GetNodeInfoResponse input = null;
 					try {
-						input = (iri.isConnected()) ? api.getNodeInfo() : null;
+						input = (connected) ? api.getNodeInfo() : null;
 					} catch (Exception e) {
 					}
 					infoViewer.setInput(input);
@@ -230,7 +244,7 @@ public class InfoPart {
 		});
 		job.schedule();
 	}
-
+	
 	private boolean availableViewer(TableViewer viewer) {
 		return ((viewer != null) && !viewer.getTable().isDisposed());
 	}
@@ -258,16 +272,27 @@ public class InfoPart {
 	}
 
 	private String computeStatusText() {
-		return iri.isConnected() ? STOP_TEXT : START_TEXT;
+		return connected ? STOP_TEXT : START_TEXT;
 	}
 
 	private void doIRIStatusAction() {
-		if (iri.isConnected())
-			executeAction("Stop IRI", () -> iri.stop());
+		if (connected)
+			executeAction("Stop IRI", this::stopIRI);
 		else
-			executeAction("Start IRI", () -> iri.start());
+			executeAction("Start IRI", this::startIRI);
 
 	}
+	
+	private void startIRI() {
+		ParameterizedCommand command = commandService.createCommand(IRIServiceCommands.START_COMMAND);
+		handlerService.executeHandler(command, context);
+	}
+	
+	private void stopIRI() {
+		ParameterizedCommand command = commandService.createCommand(IRIServiceCommands.STOP_COMMAND);
+		handlerService.executeHandler(command, context);
+	}
+
 
 	private void executeAction(String label, Runnable r) {
 		Job job = Job.create(label, (ICoreRunnable) monitor -> {
@@ -290,8 +315,8 @@ public class InfoPart {
 
 	@PreDestroy
 	private void dispose() {
-		if (iri.isConnected()) {
-			executeAction("Stop IRI", () -> iri.stop());
+		if (connected) {
+			executeAction("Stop IRI", this::stopIRI);
 		}
 	}
 

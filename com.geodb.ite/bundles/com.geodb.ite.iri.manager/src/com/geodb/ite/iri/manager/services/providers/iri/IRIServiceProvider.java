@@ -20,14 +20,13 @@ import org.eclipse.e4.ui.model.application.MApplication;
 
 import com.geodb.ite.iri.manager.services.CoordinatorService;
 import com.geodb.ite.iri.manager.services.IRIService;
-import com.geodb.ite.iri.manager.services.events.iri.IRIServiceEvents;
+import com.geodb.ite.iri.manager.services.events.IRIServiceEvents;
 import com.geodb.ite.iri.manager.util.Configurable;
 import com.iota.iri.IRI;
 
 @SuppressWarnings("restriction")
 public class IRIServiceProvider implements IRIService, Configurable {
 
-	protected boolean connected;
 	protected ExecutorService iriWorker;
 	protected Future<?> iriHandle;
 
@@ -89,6 +88,12 @@ public class IRIServiceProvider implements IRIService, Configurable {
 	protected void initialize() {
 		logger.info("Configuring service");
 		configure(Configuration.KEYS, Configuration.VALUES);
+
+		IEclipseContext appContext = application.getContext();
+		if (!appContext.containsKey(CONNECTED)) {
+			appContext.declareModifiable(CONNECTED);
+		}
+		appContext.modify(CONNECTED, false);
 	}
 
 	protected void createAPI() {
@@ -112,12 +117,12 @@ public class IRIServiceProvider implements IRIService, Configurable {
 
 	@Override
 	public boolean isConnected() {
-		return connected;
+		return (boolean) context.get(CONNECTED);
 	}
 
 	@Override
 	public void start() {
-		if (!connected)
+		if (!isConnected())
 			startWorkers();
 	}
 
@@ -126,14 +131,14 @@ public class IRIServiceProvider implements IRIService, Configurable {
 			iriWorker = Executors.newSingleThreadExecutor();
 			iriHandle = iriWorker.submit(this::setupIRI);
 			coordinator.start();
-			broker.post(IRIServiceEvents.IRI_STARTED,
+			broker.send(IRIServiceEvents.IRI_STARTED,
 					createEventData(IRIServiceEvents.IRI_STARTED, IRIServiceEvents.FIELD_CONNECTED, true));
 		}
 	}
 
 	protected void setupIRI() {
 		try {
-			connected = true;
+			application.getContext().modify(CONNECTED, true);
 			String[] args = new String[] {
 					"--testnet",
 					"--testnet-no-coo-validation",
@@ -148,7 +153,7 @@ public class IRIServiceProvider implements IRIService, Configurable {
 			IRI.main(args);
 			createAPI();
 		} catch (Exception e) {
-			connected = false;
+			application.getContext().modify(CONNECTED, false);
 			iriHandle = null;
 			iriWorker.shutdown();
 			iriWorker = null;
@@ -184,8 +189,8 @@ public class IRIServiceProvider implements IRIService, Configurable {
 			iriWorker = null;
 		}
 
-		connected = false;
-		broker.post(IRIServiceEvents.IRI_STOPED,
+		application.getContext().modify(CONNECTED, false);
+		broker.send(IRIServiceEvents.IRI_STOPED,
 				createEventData(IRIServiceEvents.IRI_STOPED, IRIServiceEvents.FIELD_CONNECTED, false));
 	}
 }

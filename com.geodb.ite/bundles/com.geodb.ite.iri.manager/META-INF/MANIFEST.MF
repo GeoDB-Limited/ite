@@ -1,11 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Manager
-Bundle-SymbolicName: com.geodb.ite.iri.manager
+Bundle-SymbolicName: com.geodb.ite.iri.manager;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: GeoDB
-Automatic-Module-Name: com.geodb.ite.iri.manager
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.e4.core.services,
  org.eclipse.e4.core.contexts,
@@ -13,9 +11,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.e4.ui.model.workbench,
  org.eclipse.osgi.services,
  com.geodb.ite.iri,
- com.geodb.ite.jota
+ com.geodb.ite.jota,
+ com.geodb.ite.iri.manager.interface
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/*.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: com.geodb.ite.iri.manager.services,
- com.geodb.ite.iri.manager.services.events.iri
 Import-Package: javax.annotation;version="1.2.0"
+Automatic-Module-Name: com.geodb.ite.iri.manager

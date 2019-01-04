@@ -14,6 +14,7 @@
 	<modules>
 		<module>com.geodb.ite.iri</module>
 		<module>com.geodb.ite.iri.manager</module>
+		<module>com.geodb.ite.iri.manager.interface</module>
 		<module>com.geodb.ite.iri.manager.ui</module>
 		<module>com.geodb.ite.jota</module>
 		<module>com.geodb.ite.rocksdb</module>
