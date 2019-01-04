@@ -32,6 +32,8 @@
       <import plugin="org.eclipse.e4.core.di"/>
       <import plugin="org.eclipse.e4.ui.di"/>
       <import plugin="org.eclipse.e4.core.contexts"/>
+      <import plugin="org.eclipse.osgi.services"/>
+      <import plugin="org.eclipse.e4.core.services"/>
       <import plugin="javax.annotation"/>
    </requires>
 

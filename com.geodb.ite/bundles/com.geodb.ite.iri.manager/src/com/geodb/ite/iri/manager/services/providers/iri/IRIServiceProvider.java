@@ -89,7 +89,6 @@ public class IRIServiceProvider implements IRIService, Configurable {
 	protected void initialize() {
 		logger.info("Configuring service");
 		configure(Configuration.KEYS, Configuration.VALUES);
-		createAPI();
 	}
 
 	protected void createAPI() {
@@ -147,7 +146,6 @@ public class IRIServiceProvider implements IRIService, Configurable {
 					"--max-peers", maxPeers
 			};
 			IRI.main(args);
-
 			createAPI();
 		} catch (Exception e) {
 			connected = false;

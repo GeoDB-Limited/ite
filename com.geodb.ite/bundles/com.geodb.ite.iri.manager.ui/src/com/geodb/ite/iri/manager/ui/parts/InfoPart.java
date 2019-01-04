@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -29,7 +30,9 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import com.geodb.ite.iri.manager.services.IRIService;
 import com.geodb.ite.iri.manager.services.events.iri.IRIServiceEvents;
+import com.geodb.ite.iri.manager.ui.parts.providers.ConfigContentProvider;
 import com.geodb.ite.iri.manager.ui.parts.providers.FieldLabelProvider;
+import com.geodb.ite.iri.manager.ui.parts.providers.IRIConfig;
 import com.geodb.ite.iri.manager.ui.parts.providers.InfoContentProvider;
 import com.geodb.ite.iri.manager.ui.parts.providers.ObjectLabelProvider;
 
@@ -48,13 +51,14 @@ public class InfoPart {
 
 	private Composite parent;
 	private Composite topComposite;
+	private Composite centerComposite;
 	private Composite bottomComposite;
 
 	private Button buttonStatus;
 	private Button buttonUpdate;
 
-	private TableViewer viewer;
-	private TableColumnLayout tableLayout;
+	private TableViewer configViewer, infoViewer;
+	private TableColumnLayout tableLayoutConfig, tableLayoutInfo;
 
 	private IotaAPI api;
 
@@ -66,6 +70,9 @@ public class InfoPart {
 
 	@Inject
 	private IEclipseContext context;
+
+	@Inject
+	private ConfigContentProvider configContentProvider;
 
 	@Inject
 	private InfoContentProvider infoContentProvider;
@@ -82,12 +89,16 @@ public class InfoPart {
 	@Inject
 	private IRIService iri;
 
+	@Inject
+	private IRIConfig iriConfig;
+
 	@PostConstruct
 	public void createControls(Composite parent) {
 		this.parent = parent;
 		setLayout();
+		createConfigViewer();
 		createInfoViewer();
-		layoutTableColumns();
+		layoutTablesColumns();
 		setInput();
 
 		setButtons();
@@ -103,10 +114,21 @@ public class InfoPart {
 		GridDataFactory
 				.fillDefaults()
 				.grab(true, true)
+				.minSize(300, 140)
 				.applyTo(topComposite);
 
-		tableLayout = new TableColumnLayout();
-		topComposite.setLayout(tableLayout);
+		tableLayoutConfig = new TableColumnLayout();
+		topComposite.setLayout(tableLayoutConfig);
+
+		centerComposite = addWidget(new Composite(parent, SWT.NONE));
+		GridDataFactory
+				.fillDefaults()
+				.grab(true, true)
+				.minSize(300, 140)
+				.applyTo(centerComposite);
+
+		tableLayoutInfo = new TableColumnLayout();
+		centerComposite.setLayout(tableLayoutInfo);
 
 		bottomComposite = addWidget(new Composite(parent, SWT.NONE));
 		GridDataFactory
@@ -126,19 +148,19 @@ public class InfoPart {
 		return widget;
 	}
 
-	private void createInfoViewer() {
-		viewer = new TableViewer(topComposite, SWT.SINGLE | SWT.BORDER | SWT.FULL_SELECTION);
-		createResultsViewerColumns();
-		setResultsViewerDesign();
-		viewer.setContentProvider(infoContentProvider);
+	private void createConfigViewer() {
+		configViewer = new TableViewer(topComposite, SWT.SINGLE | SWT.BORDER | SWT.FULL_SELECTION);
+		createConfigViewerColumns();
+		setTableViewerDesign(configViewer);
+		configViewer.setContentProvider(configContentProvider);
 	}
 
-	private void createResultsViewerColumns() {
-		createTableViewerColumn("Field", fieldLabelProvider);
-		createTableViewerColumn("Value", valueLabelProvider);
+	private void createConfigViewerColumns() {
+		createTableViewerColumn(configViewer, "Config", fieldLabelProvider);
+		createTableViewerColumn(configViewer, "Value", valueLabelProvider);
 	}
 
-	private void createTableViewerColumn(String text, ColumnLabelProvider labelProvider) {
+	private void createTableViewerColumn(TableViewer viewer, String text, ColumnLabelProvider labelProvider) {
 		TableViewerColumn tableViewerColumn = new TableViewerColumn(viewer, SWT.LEFT);
 		TableColumn tableColumn = tableViewerColumn.getColumn();
 		tableColumn.setResizable(true);
@@ -146,37 +168,82 @@ public class InfoPart {
 		tableViewerColumn.setLabelProvider(labelProvider);
 	}
 
-	private void setResultsViewerDesign() {
+	private void setTableViewerDesign(TableViewer viewer) {
 		Table table = viewer.getTable();
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 	}
 
+	private void createInfoViewer() {
+		infoViewer = new TableViewer(centerComposite, SWT.SINGLE | SWT.BORDER | SWT.FULL_SELECTION);
+		createInfoViewerColumns();
+		setTableViewerDesign(infoViewer);
+		infoViewer.setContentProvider(infoContentProvider);
+	}
+
+	private void createInfoViewerColumns() {
+		createTableViewerColumn(infoViewer, "Field", fieldLabelProvider);
+		createTableViewerColumn(infoViewer, "Value", valueLabelProvider);
+	}
+
 	private void setInput() {
+		setConfigInput();
+		setInfoInput();
+	}
+
+	private void setConfigInput() {
 		Job job = Job.create("Update API info", (ICoreRunnable) monitor -> {
 			sync.asyncExec(() -> {
-				if (availableViewer()) {
-					GetNodeInfoResponse input = null;
-					try {
-						input = (iri.isConnected()) ? api.getNodeInfo() : null;
-					} catch (Exception e) {
-					}
-					viewer.setInput(input);
-					layoutTableColumns();
+				if (availableViewer(configViewer)) {
+					configViewer.setInput(iriConfig);
+					iriConfig.register(new IRIConfig.Listener() {
+						@Override
+						public void layout() {
+							layoutTableColumns(configViewer, tableLayoutConfig);
+						}
+
+						@Override
+						public Viewer getViewer() {
+							return configViewer;
+						}
+					});
+					layoutTableColumns(configViewer, tableLayoutConfig);
 				}
 			});
 		});
 		job.schedule();
 	}
 
-	private boolean availableViewer() {
+	private void setInfoInput() {
+		Job job = Job.create("Update API info", (ICoreRunnable) monitor -> {
+			sync.asyncExec(() -> {
+				if (availableViewer(infoViewer)) {
+					GetNodeInfoResponse input = null;
+					try {
+						input = (iri.isConnected()) ? api.getNodeInfo() : null;
+					} catch (Exception e) {
+					}
+					infoViewer.setInput(input);
+					layoutTableColumns(infoViewer, tableLayoutInfo);
+				}
+			});
+		});
+		job.schedule();
+	}
+
+	private boolean availableViewer(TableViewer viewer) {
 		return ((viewer != null) && !viewer.getTable().isDisposed());
 	}
 
-	private void layoutTableColumns() {
+	private void layoutTablesColumns() {
+		layoutTableColumns(configViewer, tableLayoutConfig);
+		layoutTableColumns(infoViewer, tableLayoutInfo);
+	}
+
+	private void layoutTableColumns(TableViewer viewer, TableColumnLayout layout) {
 		TableColumn[] columns = viewer.getTable().getColumns();
-		tableLayout.setColumnData(columns[0], new ColumnWeightData(100, 0));
-		tableLayout.setColumnData(columns[1], new ColumnWeightData(100, 0));
+		layout.setColumnData(columns[0], new ColumnWeightData(50, 0));
+		layout.setColumnData(columns[1], new ColumnWeightData(50, 0));
 		columns[0].pack();
 	}
 
@@ -186,7 +253,7 @@ public class InfoPart {
 			buttonUpdate.setEnabled(false);
 			doIRIStatusAction();
 		});
-		buttonUpdate = addButton(UPDATE_TEXT, e -> setInput());
+		buttonUpdate = addButton(UPDATE_TEXT, e -> setInfoInput());
 		buttonUpdate.setEnabled(false);
 	}
 
