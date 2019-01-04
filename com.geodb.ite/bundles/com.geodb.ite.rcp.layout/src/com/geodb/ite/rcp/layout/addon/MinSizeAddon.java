@@ -1,4 +1,4 @@
-package com.geodb.ite.rcp.addon;
+package com.geodb.ite.rcp.layout.addon;
 
 import javax.annotation.PostConstruct;
 

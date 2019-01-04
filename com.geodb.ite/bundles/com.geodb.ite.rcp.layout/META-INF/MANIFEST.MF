@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Layout
+Bundle-SymbolicName: com.geodb.ite.rcp.layout;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: GeoDB
+Require-Bundle: javax.inject,
+ org.eclipse.e4.ui.model.workbench,
+ org.eclipse.e4.core.services,
+ org.eclipse.osgi.services,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.swt
+Automatic-Module-Name: com.geodb.ite.rcp.layout
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: javax.annotation;version="1.2.0"
