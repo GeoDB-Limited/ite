@@ -1,5 +1,7 @@
 package com.geodb.ite.iri.manager.services.providers.iri;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -11,12 +13,14 @@ import javax.inject.Named;
 import jota.IotaAPI;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.log.ILoggerProvider;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.model.application.MApplication;
 
 import com.geodb.ite.iri.manager.services.CoordinatorService;
 import com.geodb.ite.iri.manager.services.IRIService;
+import com.geodb.ite.iri.manager.services.events.iri.IRIServiceEvents;
 import com.geodb.ite.iri.manager.util.Configurable;
 import com.iota.iri.IRI;
 
@@ -66,6 +70,9 @@ public class IRIServiceProvider implements IRIService, Configurable {
 	protected IEclipseContext context;
 
 	@Inject
+	private IEventBroker broker;
+
+	@Inject
 	protected CoordinatorService coordinator;
 
 	@Inject
@@ -105,6 +112,11 @@ public class IRIServiceProvider implements IRIService, Configurable {
 	}
 
 	@Override
+	public boolean isConnected() {
+		return connected;
+	}
+
+	@Override
 	public void start() {
 		if (!connected)
 			startWorkers();
@@ -115,6 +127,8 @@ public class IRIServiceProvider implements IRIService, Configurable {
 			iriWorker = Executors.newSingleThreadExecutor();
 			iriHandle = iriWorker.submit(this::setupIRI);
 			coordinator.start();
+			broker.post(IRIServiceEvents.IRI_STARTED,
+					createEventData(IRIServiceEvents.IRI_STARTED, IRIServiceEvents.FIELD_CONNECTED, true));
 		}
 	}
 
@@ -144,6 +158,13 @@ public class IRIServiceProvider implements IRIService, Configurable {
 		}
 	}
 
+	private Map<String, Object> createEventData(String topic, String field, Object value) {
+		Map<String, Object> map = new HashMap<>();
+		map.put(IRIServiceEvents.TOPIC_BASE, topic);
+		map.put(field, value);
+		return map;
+	}
+
 	@Override
 	public void stop() {
 		logger.info("Deactivating service");
@@ -166,5 +187,7 @@ public class IRIServiceProvider implements IRIService, Configurable {
 		}
 
 		connected = false;
+		broker.post(IRIServiceEvents.IRI_STOPED,
+				createEventData(IRIServiceEvents.IRI_STOPED, IRIServiceEvents.FIELD_CONNECTED, false));
 	}
 }

@@ -16,5 +16,6 @@ Require-Bundle: org.eclipse.core.runtime,
  com.geodb.ite.jota
 Service-Component: OSGI-INF/*.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: com.geodb.ite.iri.manager.services
+Export-Package: com.geodb.ite.iri.manager.services,
+ com.geodb.ite.iri.manager.services.events.iri
 Import-Package: javax.annotation;version="1.2.0"
