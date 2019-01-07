@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="com.geodb.ite.app.rcp" uid="ITE" id="com.geodb.ite.rcp.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="ITE" uid="ITE" id="com.geodb.ite.rcp.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -15,7 +15,7 @@
 
    <windowImages/>
 
-   <launcher>
+   <launcher name="ite">
       <win useIco="false">
          <bmp/>
       </win>
@@ -108,6 +108,7 @@
       <feature id="com.geodb.ite.feature.app.rcp"/>
       <feature id="com.geodb.ite.feature.testnet"/>
       <feature id="com.geodb.ite.feature.jota"/>
+      <feature id="com.geodb.ite.feature.utilities"/>
    </features>
 
    <configurations>

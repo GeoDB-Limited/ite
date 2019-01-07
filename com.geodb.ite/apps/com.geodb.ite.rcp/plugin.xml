@@ -7,14 +7,14 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.e4.ui.workbench.swt.E4Application"
-            name="com.geodb.ite.app.rcp">
+            name="ITE">
          <property
                name="applicationCSS"
                value="platform:/plugin/com.geodb.ite.rcp/css/default.css">
          </property>
          <property
                name="appName"
-               value="com.geodb.ite.app.rcp">
+               value="ITE">
          </property>
       </product>
    </extension>

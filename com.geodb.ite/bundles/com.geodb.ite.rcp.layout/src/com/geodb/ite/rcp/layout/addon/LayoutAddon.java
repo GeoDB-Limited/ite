@@ -35,7 +35,10 @@ public class LayoutAddon implements IDS {
 		EventHandler handler = new EventHandler() {
 			@Override
 			public void handleEvent(Event event) {
-				createPart(PARTSTACK_MAIN, PART_IRI_INFO, true, false, PartState.ACTIVATE);
+				createPart(PARTSTACK_LEFT, PART_EXPLORER, true, false, PartState.ACTIVATE);
+				createPart(PARTSTACK_LEFT, PART_CONSOLE, true, false, PartState.ACTIVATE);
+				createPart(PARTSTACK_RIGHT, PART_IRI_INFO, true, false, PartState.ACTIVATE);
+				createPart(PARTSTACK_BOTTOM, PART_CONVERTER, true, false, PartState.ACTIVATE);
 			}
 		};
 		eventBroker.subscribe(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, handler);

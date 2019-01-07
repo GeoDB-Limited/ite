@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_BxaXACerEeWxCPrV0pAZQQ">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_o6FAwBBGEemUN4deEHQ0oA" featurename="descriptors" parentElementId="xpath:/">
-    <elements xsi:type="basic:PartDescriptor" xmi:id="_tLPT8BBGEemUN4deEHQ0oA" elementId="com.geodb.ite.iri.manager.info.partdescriptor" label="IRI Info" iconURI="platform:/plugin/com.geodb.ite.iri.manager.ui/icons/Sample.png" contributionURI="bundleclass://com.geodb.ite.iri.manager.ui/com.geodb.ite.iri.manager.ui.parts.InfoPart"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_tLPT8BBGEemUN4deEHQ0oA" elementId="com.geodb.ite.iri.manager.info.partdescriptor" label="IRI Info" iconURI="platform:/plugin/com.geodb.ite.iri.manager.ui/icons/IOTA-icon_32.png" contributionURI="bundleclass://com.geodb.ite.iri.manager.ui/com.geodb.ite.iri.manager.ui.parts.InfoPart"/>
   </fragments>
 </fragment:ModelFragments>

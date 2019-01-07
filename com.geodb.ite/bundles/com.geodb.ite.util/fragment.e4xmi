@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_XGDM0BJnEempqvfBNFr8Yg">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_frQvIBJnEempqvfBNFr8Yg" featurename="descriptors" parentElementId="xpath:/">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_habmsBJnEempqvfBNFr8Yg" elementId="com.geodb.ite.util.converter.partdescriptor" label="Converter" iconURI="platform:/plugin/com.geodb.ite.util/icons/Sample.png" contributionURI="bundleclass://com.geodb.ite.util/com.geodb.ite.util.parts.ConverterPart"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_HJCZsBJrEempqvfBNFr8Yg" elementId="com.geodb.ite.util.explorer.partdescriptor" label="Explorer" iconURI="platform:/plugin/com.geodb.ite.util/icons/nodes_32.png" contributionURI="bundleclass://com.geodb.ite.util/com.geodb.ite.util.parts.TangleExplorerPart"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_Wj2h4BJrEempqvfBNFr8Yg" elementId="com.geodb.ite.util.console.partdescriptor" label="Console" iconURI="platform:/plugin/com.geodb.ite.util/icons/console_32.png" contributionURI="bundleclass://com.geodb.ite.util/com.geodb.ite.util.parts.ConsolePart"/>
+  </fragments>
+</fragment:ModelFragments>

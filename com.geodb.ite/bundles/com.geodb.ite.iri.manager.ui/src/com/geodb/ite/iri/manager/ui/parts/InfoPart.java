@@ -47,8 +47,6 @@ import jota.dto.response.GetNodeInfoResponse;
 @SuppressWarnings("restriction")
 public class InfoPart {
 
-	public static final String ID = "com.geodb.ite.iri.manager.info.part";
-
 	public static final String PLUGIN_ID = "com.geodb.ite.iri.manager.ui";
 
 	private static final String START_TEXT = "&Start";
@@ -121,14 +119,15 @@ public class InfoPart {
 	private void setLayout() {
 		GridLayoutFactory
 				.fillDefaults()
-				.spacing(0, 0)
+				.spacing(0, 4)
+				.margins(0, 4)
 				.applyTo(parent);
 
 		topComposite = addWidget(new Composite(parent, SWT.NONE));
 		GridDataFactory
 				.fillDefaults()
 				.grab(true, true)
-				.minSize(300, 140)
+				.minSize(290, 140)
 				.applyTo(topComposite);
 
 		tableLayoutConfig = new TableColumnLayout();
@@ -138,7 +137,7 @@ public class InfoPart {
 		GridDataFactory
 				.fillDefaults()
 				.grab(true, true)
-				.minSize(300, 140)
+				.minSize(290, 140)
 				.applyTo(centerComposite);
 
 		tableLayoutInfo = new TableColumnLayout();
@@ -307,6 +306,7 @@ public class InfoPart {
 				.swtDefaults()
 				.align(SWT.CENTER, SWT.CENTER)
 				.grab(false, false)
+				.hint(75, 30)
 				.applyTo(b);
 		b.setText(label);
 		b.addListener(SWT.Selection, l);

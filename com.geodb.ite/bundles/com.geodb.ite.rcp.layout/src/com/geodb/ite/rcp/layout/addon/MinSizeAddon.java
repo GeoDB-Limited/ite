@@ -14,8 +14,8 @@ import org.osgi.service.event.EventHandler;
  */
 public class MinSizeAddon {
 
-	private static final int WIDTH = 300;
-	private static final int HEIGHT = 400;
+	private static final int WIDTH = 900;
+	private static final int HEIGHT = 600;
 
 	@PostConstruct
 	public void init(final IEventBroker eventBroker) {

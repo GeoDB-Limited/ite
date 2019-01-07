@@ -18,5 +18,6 @@
 		<module>com.geodb.ite.feature.iri</module>
 		<module>com.geodb.ite.feature.jota</module>
 		<module>com.geodb.ite.feature.testnet</module>
+		<module>com.geodb.ite.feature.utilities</module>
 	</modules>
 </project>

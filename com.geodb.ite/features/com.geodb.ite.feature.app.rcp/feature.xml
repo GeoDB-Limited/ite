@@ -21,6 +21,14 @@
          id="com.geodb.ite.feature.e4rcp"
          version="0.0.0"/>
 
+   <includes
+         id="com.geodb.ite.feature.testnet"
+         version="0.0.0"/>
+
+   <includes
+         id="com.geodb.ite.feature.utilities"
+         version="0.0.0"/>
+
    <requires>
       <import plugin="javax.inject"/>
       <import plugin="org.eclipse.core.runtime"/>
