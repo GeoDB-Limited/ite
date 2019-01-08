@@ -13,7 +13,11 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench,
  javax.inject,
  com.geodb.ite.jota,
  org.eclipse.e4.core.contexts,
- org.eclipse.e4.core.di
+ org.eclipse.e4.core.di,
+ org.eclipse.e4.core.services,
+ org.eclipse.e4.ui.workbench
 Automatic-Module-Name: com.geodb.ite.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.annotation;version="1.2.0"
+Service-Component: OSGI-INF/*.xml
+Bundle-ActivationPolicy: lazy

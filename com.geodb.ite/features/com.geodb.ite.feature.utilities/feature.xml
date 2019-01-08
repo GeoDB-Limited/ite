@@ -24,11 +24,13 @@
       <import plugin="org.eclipse.e4.ui.services"/>
       <import plugin="org.eclipse.e4.core.di.annotations"/>
       <import plugin="org.eclipse.e4.core.di.extensions"/>
-      <import plugin="javax.annotation"/>
       <import plugin="javax.inject"/>
       <import plugin="com.geodb.ite.jota"/>
       <import plugin="org.eclipse.e4.core.contexts"/>
       <import plugin="org.eclipse.e4.core.di"/>
+      <import plugin="org.eclipse.e4.core.services"/>
+      <import plugin="javax.annotation"/>
+      <import plugin="org.eclipse.e4.ui.workbench"/>
    </requires>
 
    <plugin
