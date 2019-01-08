@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ITE Util
+Bundle-SymbolicName: com.geodb.ite.util;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: GeoDB
+Require-Bundle: org.eclipse.e4.ui.model.workbench,
+ org.eclipse.jface,
+ org.eclipse.e4.ui.di,
+ org.eclipse.e4.ui.services,
+ org.eclipse.e4.core.di.annotations,
+ org.eclipse.e4.core.di.extensions,
+ javax.inject,
+ com.geodb.ite.jota,
+ org.eclipse.e4.core.contexts,
+ org.eclipse.e4.core.di,
+ org.eclipse.e4.core.services,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.osgi,
+ org.eclipse.core.runtime
+Automatic-Module-Name: com.geodb.ite.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: javax.annotation;version="1.2.0"
+Service-Component: OSGI-INF/*.xml
+Bundle-ActivationPolicy: lazy

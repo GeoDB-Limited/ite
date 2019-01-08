@@ -1,0 +1,31 @@
+.MPartStack {
+	font-size: 12px;
+	swt-minimize-visible: false;
+	swt-tab-height: 31px;
+	swt-selected-tabs-background: #7c6d87 #dfe3ee 100%;
+	swt-unselected-tabs-background: #f7f7f7 100%;
+}
+
+.MPart, CTabFolder, CTabItem:selected {
+	background-color: #f7f7f7;
+}
+
+#com-geodb-ite-rcp-bottom-partstack {
+	swt-maximize-visible: false;
+	swt-tab-height: 0px
+}
+
+#com-geodb-ite-rcp-top-partsashcontainer-right-partstack {
+	swt-maximize-visible: false
+}
+
+Text {
+	font-size: 12px;
+	font-family: Monospace;
+	background-color: white;
+}
+
+.TitleClass {
+	font-size: 10px;
+	font-weight: bold;
+}

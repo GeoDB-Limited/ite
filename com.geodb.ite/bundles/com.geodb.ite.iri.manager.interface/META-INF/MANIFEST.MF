@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Interface
+Bundle-SymbolicName: com.geodb.ite.iri.manager.interface
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: GeoDB
+Automatic-Module-Name: com.geodb.ite.iri.manager.interface
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: com.geodb.ite.iri.manager.commands,
+ com.geodb.ite.iri.manager.services,
+ com.geodb.ite.iri.manager.services.configuration,
+ com.geodb.ite.iri.manager.services.events

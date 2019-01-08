@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rocksdb
+Bundle-SymbolicName: com.geodb.ite.rocksdb
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: GeoDB
+Automatic-Module-Name: com.geodb.ite.rocksdb
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: lib/rocksdbjni.jar,
+ .
+Export-Package: org.rocksdb,
+ org.rocksdb.util

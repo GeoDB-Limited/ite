@@ -1,0 +1,12 @@
+/bin/
+/target/
+/resources/iri/
+/resources/patches/src/
+/lib/
+/src/
+logback.xml
+previousEpochsSpentAddresses.*
+snapshotTestnet.txt
+snapshotTestnet.log
+!/resources/base/*
+/resources/base/snapshotTestnet.*
